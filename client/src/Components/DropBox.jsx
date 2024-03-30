@@ -4,45 +4,46 @@ import Tile from './Tile'
 import { useRef } from 'react'
 import myContext from '../Contexts/myContext'
 const DropBox = ({delay,tiles}) => {
+  console.log(tiles)
     const [arr, setArr] = useState([]);
     
     const {button,setButton} = useContext(myContext);
     const [tileClk, setTileClk] = useState(null);
     
-  useEffect(() => {
-    let count = 0;
-    let interval
-    const startInterval = ()=>{
+  // useEffect(() => {
+  //   let count = 0;
+  //   let interval
+  //   const startInterval = ()=>{
 
-         interval = setInterval(() => {
-          if (count < 10) {
-            console.log('tile count',tiles[count])
-            setArr(prev => ([...prev, tiles[count]]));
-            setTileClk(false)
-            count++;
+  //        interval = setInterval(() => {
+  //         if (count < 10) {
+  //           console.log('tile count',tiles[count])
+  //           setArr(prev => ([...prev, tiles[count]]));
+  //           setTileClk(false)
+  //           count++;
            
-          } else {
-            clearInterval(interval);
-          }
-        }, 2500);
-    }
-    const stopInterval = ()=>{
-        clearInterval(interval)
-    }
-    if(button.start){
-        console.log(button.start)
-        startInterval();
-        setArr([]);
-        setButton((prev)=>({...prev,score:0}))
-    }
-    else if(button.stop){
-        stopInterval();
-    }
-    return () => clearInterval(interval);
-  }, [delay,button.start,button.stop]);
-  const animationStyle = {
-    animation: `drop ${delay}ms ease-out 10`, 
-  };
+  //         } else {
+  //           clearInterval(interval);
+  //         }
+  //       }, 2500);
+  //   }
+  //   const stopInterval = ()=>{
+  //       clearInterval(interval)
+  //   }
+  //   if(button.start){
+  //       console.log(button.start)
+  //       startInterval();
+  //       setArr([]);
+  //       setButton((prev)=>({...prev,score:0}))
+  //   }
+  //   else if(button.stop){
+  //       stopInterval();
+  //   }
+  //   return () => clearInterval(interval);
+  // }, [delay,button.start,button.stop]);
+  // const animationStyle = {
+  //   animation: `drop ${delay}ms ease-out 10`, 
+  // };
   
   const handleTileClk =(item,index)=>{
     setTileClk(index);
@@ -55,10 +56,10 @@ const DropBox = ({delay,tiles}) => {
     }
   }
   return (
-    <div className="flex flex-col justify-end">
-      {arr.length>0&&arr.map((item, index) => (
-        <div key={index} className='' style={index===0?animationStyle:{}} onClick={()=>{handleTileClk(item,index)}}>
-            
+    <div className="flex flex-col justify-around">
+      {tiles&&tiles.length>0&&tiles.map((item, index) => (
+        <div key={index} className='' onClick={()=>{handleTileClk(item,index)}}>
+            {console.log(item)}
           <Tile clk={tileClk} indx={index} bgClr={item}/>
         </div>
       ))}

@@ -9,7 +9,7 @@ function App() {
     start:false,
     stop:false,
     score:0,
-    speed:250,
+    speed:1000,
     range:1,
   })
   return (

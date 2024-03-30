@@ -22,7 +22,7 @@ const ButtonPanel = () => {
             <p className="font-bold text-5xl  text-white">Score</p>
             <p className="font-bold text-3xl leading-10 mt-5 text-white">{button.score}</p>
             </div>
-          <button className="w-5/6 h-24 rounded-xl text-center bg-green-500 text-white text-5xl font-bold" onClick={handleStart}>Start</button>
+          <button className="w-5/6 h-24 rounded-xl text-center bg-green-500 text-white text-5xl font-bold cursor-pointer" onClick={handleStart}>Start</button>
           <button className="w-5/6 h-24 rounded-xl text-center bg-red-500 text-white text-5xl font-bold" onClick={handleStop}>Stop</button>
           <div className="flex justify-evenly items-center w-5/6">
             <button className="w-32 h-20 bg-green-800 rounded-2xl text-white text-6xl text-center font-bold" onClick={handleIncrement}>+</button>

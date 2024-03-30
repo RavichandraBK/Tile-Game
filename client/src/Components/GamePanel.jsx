@@ -1,66 +1,65 @@
-import React, { useContext } from 'react'
+import React, { useContext } from "react";
 import { useEffect, useState } from "react";
 import Tile from "./Tile";
-import DropBox from './DropBox';
-import myContext from '../Contexts/myContext';
-import patterns from '../apis/pattern'
+import DropBox from "./DropBox";
+import myContext from "../Contexts/myContext";
+import patterns from "../apis/pattern";
 const GamePanel = () => {
-  const {button,setButton} = useContext(myContext)
-  const [tileClk, setTileClk] = useState(null);
-    // const [arr, setArr] = useState([1,2,3])
-    const [data, setData] = useState(null);
-    useEffect(()=>{
-      const handlePattern = async()=>{
-        const grids = await patterns();
-        setData(grids.data.grid);
-      }
-      handlePattern();
-    },[])
-    const handleTileClk =(item,index)=>{
-      setTileClk(index);
-      // console.log(item)
-      item==='red'&&setButton((prev)=>({...prev,score:prev.score-10}));
-    }
-    const generatePatterns = (times,type) => {
-      const divs = [];
-      for (let i = 0; i < times; i++) {
-        divs.push(
-          <div key={i} onClick={()=>{handleTileClk(type,i)}}>
+  const { button, setButton } = useContext(myContext);
 
-        <Tile clk={tileClk} indx={i} bgClr={type}/>
-          </div>
-      );
-      }
-      return divs;
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    const handlePattern = async () => {
+      const grids = await patterns();
+      setData(grids.data.grid);
     };
-    const defaultPattern1 = generatePatterns(10,data&&data.type1);
-    const defaultPattern2 = generatePatterns(10,data&&data.type2);
+    handlePattern();
+  }, []);
+  
+  const animationStyle = {
+    animation: `fro ${button.speed}ms ease-in-out infinite alternate`, 
+  };
+ useEffect(()=>{
+  if(button.start){
+    setButton((prev)=>({...prev,score:0}));
+  }
+ },[button.start])
+  
 
-    return (
-      <>
+  return (
+    <>
       <div className="bg-black  h-[640px] w-[640px] ml-8 mt-10 rounded-xl">
         <div className="flex h-full w-full">
-        <div  className="flex flex-col justify-end">
-          {defaultPattern1}
+          <div className="flex">
+            {/* <div>{defaultPattern1}</div>
+            <div>{defaultPattern1}</div> */}
+            {data&&data.defaults&&data.defaults.map((_,index)=>(<DropBox
+                key={index}
+                delay={(index + 1) * button.speed}
+                tiles={data.defaults[0].type1}
+              />))}
           </div>
-        <div  className="flex flex-col justify-end">
-          {defaultPattern1}
-          </div>
-        <div  className="flex flex-col justify-end">
-          {defaultPattern2}
-          </div>
-        <div  className="flex flex-col justify-end">
-          {defaultPattern2}
-          </div>
-          
-          {data &&
-          data.Patterns&&data.Patterns.map((item,index)=>(<DropBox key={index} delay={(index+1)*button.speed} tiles={item[`pattern${index+1}`]}/>))}
-        </div>
-        
-      </div>
-      </>
-    )
-  
-}
 
-export default GamePanel
+          <div className={`flex absolute left-40  w-96`} style={button.start ? animationStyle : null}>
+            {/* <div>{defaultPattern2}</div>
+            <div>{defaultPattern2}</div> */}
+            {data&&data.defaults&&data.defaults.map((_,index)=>(<DropBox
+                key={index}
+                delay={(index + 1) * button.speed}
+                tiles={data.defaults[1].type2}
+              />))}
+          </div>
+          {data&&data.Patterns&& data.Patterns.map((item, index) => (
+              <DropBox
+                key={index}
+                delay={(index + 1) * button.speed}
+                tiles={item[`pattern${index+1}`]}
+              />
+            ))}
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default GamePanel;
