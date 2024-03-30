@@ -9,10 +9,10 @@ const ButtonPanel = () => {
     setButton((prev)=>({...prev,start:false,stop:true}));
   }
   const handleIncrement=()=>{
-    button.speed>50&&setButton(prev=>({...prev,speed:prev.speed-50,range:prev.range+1}));
+    button.speed>700&&setButton(prev=>({...prev,speed:prev.speed-50,range:prev.range+1}));
   }
   const handleDecrement=()=>{
-    button.speed<250&&setButton(prev=>({...prev,speed:prev.speed+50,range:prev.range-1}));
+    button.speed<1000&&setButton(prev=>({...prev,speed:prev.speed+50,range:prev.range-1}));
   }
   return (
     <>
